@@ -1,0 +1,76 @@
+name: Build Docker Image (develop)
+
+on:
+  push:
+    branches:
+      - main
+  #   schedule:
+  #     - cron: "0 0 * * *" # This cron expression schedules the workflow to run daily at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set git to use CRLF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol crlf
+
+      - run: git config --global user.name 'GitHub'
+      - run: git config --global user.email 'info@symbiosika.de'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BE_GH_REGISTRY_KEY }}
+          ref: main
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Log submodule status
+        run: |
+          echo "Main repository status:"
+          git status
+          echo "\nSubmodule commits:"
+          git submodule foreach 'echo "Repository: $name"; git log -1 --oneline; echo "Status:"; git status --short; echo "----------------"'
+
+      - name: Download artifact "fastapp-shared-ui"
+        uses: bettermarks/action-artifact-download@0.5.1
+        with:
+          repo: symbiosika/fastapp-shared-ui
+          token: ${{ secrets.BE_GH_REGISTRY_KEY }}
+          artifact_name: fastapp-shared-ui-develop
+          wait_seconds: 1
+
+      - name: unzip all Artifacts
+        run: |
+          mkdir tmpdocs
+          mkdir -p dist/static
+          mkdir -p dist/static/docs
+          mkdir -p dist/public
+
+          echo "unzip fastapp-shared-ui-develop"
+          unzip -o fastapp-shared-ui-develop -d ./dist/public
+
+          ls -a
+
+      - name: Build Docker image
+        run: |
+          docker build -t fastapp-sustainability-manager .
+
+      - name: Tag Docker image
+        run: |
+          docker tag fastapp-sustainability-manager ghcr.io/symbiosika/fastapp-sustainability-manager:1
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.BE_GH_REGISTRY_KEY }}
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/symbiosika/fastapp-sustainability-manager:1

@@ -36,8 +36,7 @@ COPY --from=backend-builder /usr/src/app/backend/src/fastapp-framework/drizzle-s
 COPY --from=backend-builder /usr/src/app/backend/src/lib/db/db-schema.ts ./src/lib/db/db-schema.ts
 
 # COPY all artifacts
-# COPY ./dist/public/manage ./public/manage
-# COPY ./dist/static/app ./static/app
+COPY ./dist/public/manage ./public/manage
 
 # Expose the port your app runs on
 EXPOSE 3000
