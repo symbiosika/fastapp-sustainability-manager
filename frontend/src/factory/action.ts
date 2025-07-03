@@ -1,0 +1,26 @@
+import { ActionEntry } from '@/services/types';
+
+export const getEmptyAction = (selectedSiteId: string): ActionEntry => ({
+  id: 'new',
+  site: selectedSiteId,
+  name: '',
+  descriptionBefore: '',
+  descriptionAfter: '',
+  targetValueAbsolutPlanned: 0,
+  targetValueAbsolutIs: 0,
+  descriptionTargetValue: '',
+  finishedUntilPlanned: null,
+  finishedUntilIs: null,
+  category: '',
+  costsPlanned: 0,
+  costsIs: 0,
+  roi: 0,
+  descriptionCosts: '',
+  avoidanceCosts: 0,
+  responsible: '',
+  status: 'open',
+  progress: 0,
+  relevant: true,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+});

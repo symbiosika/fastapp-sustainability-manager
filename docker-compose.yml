@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db_sustainabilitymanager:
+    image: pgvector/pgvector:pg17
+    restart: no
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data_sustainabilitymanager:/var/lib/postgresql/data
+
+  app:
+    # CLOUD
+    # image: ghcr.io/symbiosika/fastapp-symbiosika-suite:1
+    # LOCAL DEVELOPMENT
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Webserver
+      - BASE_URL=${BASE_URL}
+      - WRITE_DEBUG_FILES=${WRITE_DEBUG_FILES}
+      - CRON_LOG=${CRON_LOG}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - AUTH_TYPE=${AUTH_TYPE}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - SECRETS_AES_KEY=${SECRETS_AES_KEY}
+      - SECRETS_AES_IV=${SECRETS_AES_IV}
+      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
+      # Postgres
+      - POSTGRES_USE_SSL=false
+      - POSTGRES_HOST=db_sustainabilitymanager
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      # OpenAI
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # Mail
+      - SMTP_DEBUG=${SMTP_DEBUG}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_DEFAULT_SENDER=${SMTP_DEFAULT_SENDER}
+      - SMTP_PASS=${SMTP_PASS}
+      # Temporary Storage
+      - TEMPORARY_STORAGE_PATH=${TEMPORARY_STORAGE_PATH}
+    depends_on:
+      - db_sustainabilitymanager
+
+volumes:
+  postgres_data_sustainabilitymanager:
+    driver: local

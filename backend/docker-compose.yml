@@ -1,0 +1,35 @@
+# THIS IS ONLY FOR TESTING AND LOCAL DEVELOPMENT
+# DO NOT USE THIS IN PRODUCTION
+
+services:
+  postgres_db_sus_man:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432" # Expose port 5432 locally
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data
+    restart: no
+    networks:
+      - sus_man_network
+
+  dbManager:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "support@symbiosika.de"
+      PGADMIN_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5050:80"
+    networks:
+      - sus_man_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  sus_man_network:
+    driver: bridge
