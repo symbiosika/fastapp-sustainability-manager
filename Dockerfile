@@ -34,7 +34,7 @@ COPY --from=backend-builder /usr/src/app/backend/drizzle.fastapp.config.ts ./
 COPY --from=backend-builder /usr/src/app/backend/drizzle-sql ./drizzle-sql
 COPY --from=backend-builder /usr/src/app/backend/src/fastapp-framework/drizzle-sql ./src/fastapp-framework/drizzle-sql
 COPY --from=backend-builder /usr/src/app/backend/src/lib/db/db-schema.ts ./src/lib/db/db-schema.ts
-COPY --from=backend-builder /usr/src/app/backend/src/fastapp-framework/src/lib/db ./src/fastapp-framework/src/lib/db
+COPY --from=backend-builder /usr/src/app/backend/src/fastapp-framework ./src/fastapp-framework
 
 # COPY all artifacts
 # COPY ./dist/public/manage ./public/manage
