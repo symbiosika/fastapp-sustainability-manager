@@ -1,23 +1,22 @@
 import {
   doublePrecision,
   pgTableCreator,
-  primaryKey,
   type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 import {
   uuid,
-  varchar,
   text,
   timestamp,
   jsonb,
   boolean,
   integer,
-  pgEnum,
 } from "drizzle-orm/pg-core";
-import { users } from "../../fastapp-framework/src/lib/db/schema/users";
 import { relations, sql } from "drizzle-orm";
-import { files } from "../../fastapp-framework/src/lib/db/schema/files";
-import { getDbSchema } from "../../fastapp-framework/src/dbSchema";
+import {
+  getDbSchema,
+  users,
+  files,
+} from "../../fastapp-framework/src/lib/db/db-schema";
 
 export const PREFIX = "sus_man_";
 
