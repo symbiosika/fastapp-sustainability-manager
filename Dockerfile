@@ -37,7 +37,7 @@ COPY --from=backend-builder /usr/src/app/backend/src/lib/db/db-schema.ts ./src/l
 COPY --from=backend-builder /usr/src/app/backend/src/fastapp-framework ./src/fastapp-framework
 
 # COPY all artifacts
-# COPY ./dist/public/manage ./public/manage
+COPY ./dist/public/manage ./public/manage
 
 # Expose the port your app runs on
 EXPOSE 3000
