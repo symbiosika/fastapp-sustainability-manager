@@ -37,7 +37,7 @@ COPY --from=backend-builder /usr/src/app/backend/static ./static
 COPY --from=backend-builder /usr/src/app/backend/public ./public
 
 # Copy the built frontend to static directory
-COPY --from=frontend-builder /usr/src/app/frontend/dist ./static
+COPY --from=frontend-builder /usr/src/app/frontend/dist/static ./static
 
 # Copy drizzle configuration and migrations
 COPY --from=backend-builder /usr/src/app/backend/drizzle.config.ts ./
