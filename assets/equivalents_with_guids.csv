@@ -1,4 +1,4 @@
-ID;Scope;Kategorie;Spezifikation 1;Spezifikation 2;Spezifikation 3;Zusatzname;Kommentar;Eingang;Ausgang;Quelle;Faktor;Monatliche Eingaben;Wert-Jan (monatlich);Wert Feb (monatlich);Wert Mar (monatlich);Wert Apr (monatlich);Wert May (monatlich);Wert Jun (monatlich);Wert Jul (monatlich);Wert Aug (monatlich);Wert Sep (monatlich);Wert Oct (monatlich);Wert Nov (monatlich);Wert Dec (monatlich);Überliegende Berechnung (ID);Projekt
+id;scope;category;specifikation1;specifikation2;specifikation3;add_name1;comment;in;out;source;factor;monthly_values;jan;feb;mar;apr;may;jun;jul;aug;sep;oct;nov;dec;parent;project
 41f565cd-1f1c-4557-a41c-03b4c4819c0e;3;Mineralien und Baustoffe; Bausand; Bausand;;;;kg;kg;EEW 2023;0.005;0;0;0;0;0;0;0;0;0;0;0;0;0;;
 152e1b32-f5a6-497a-9be7-4c632d05df0c;1;Technische Gase; Fluorethan;;;;;kg;kg;UBA;12;0;0;0;0;0;0;0;0;0;0;0;0;0;;
 e02d4815-1c20-49a3-8b86-d1353314eaaf;3;Chemische Grundstoffe und Produkte; Harnstoff;;;;;kg;kg;Gemis 5.1;0.703;0;0;0;0;0;0;0;0;0;0;0;0;0;;
