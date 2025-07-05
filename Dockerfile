@@ -9,7 +9,15 @@ RUN rm -f .env
 RUN rm -f ./src/fastapp-framework/.env
 RUN bun run build
 
-# Stage 2: Final image
+# Stage 2: Build the frontend
+FROM node:18-alpine AS frontend-builder
+WORKDIR /usr/src/app/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
+
+# Stage 3: Final image
 FROM oven/bun:1 AS release
 WORKDIR /usr/src/app
 
@@ -27,6 +35,9 @@ COPY --from=backend-builder /usr/src/app/backend/package.json ./package.json
 # Copy the "static" and "public" folders from the backend first
 COPY --from=backend-builder /usr/src/app/backend/static ./static
 COPY --from=backend-builder /usr/src/app/backend/public ./public
+
+# Copy the built frontend to static directory
+COPY --from=frontend-builder /usr/src/app/frontend/dist ./static
 
 # Copy drizzle configuration and migrations
 COPY --from=backend-builder /usr/src/app/backend/drizzle.config.ts ./
